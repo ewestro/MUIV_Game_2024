@@ -1,12 +1,12 @@
 ﻿
 # Объявляем персонажей (легче обращаться к сущностям, чем каждый раз прописывать их заново)
 define captain = Character('Капитан', color= "#FF0000")
-define firstman = Character('Рулевой', color= "#c8ffc8")
+define firstman = Character('Старпом', color= "#c8ffc8")
+define secondman = Character('Рулевой', color= "#c8ffc8")
 define coordinator = Character('Координатор', color= "#c8ffc8")
 define signal = Character('Связист', color= "#c8ffc8")
 define secure = Character('Начальник Охраны', color= "#c8ffc8")
 define doctor = Character('Доктор', color= "#00FF00")
-define secondman = Character('Старпом', color= "#c8ffc8")
 define cook = Character('Кок', color= "#c8ffc8")
 define engineer = Character('Техник', color= "#c8ffc8")
 
@@ -18,7 +18,7 @@ define engineer = Character('Техник', color= "#c8ffc8")
 init:
 # Тут можно объявлять изображения, но никто не мешает делать это прямо в сценах ( даже нужно так делать, особенно актуально для одиночных ивентов, нечего захламлять код)
     image bg port = "Images/background/port.jpg"
-    #image bg 2 = "Images/background/2.jpg"
+    image bg corridor = "Images/background/corridor.jpg"
     #image bg 3 = "Images/background/3.jpg"
     #image bg 4 = "Images/background/4.jpg"
     #image bg 5 = "Images/background/5.jpg"
@@ -56,3 +56,20 @@ menu:
 
 label after_menu:
     "Палуба встретила капитана тусклым дежурным освещением."
+
+    scene bg corridor with dissolve
+    "Через несколько поворотов он вышел к складу, где его уже ждала старшая помощница"
+    "Она барабанила пальцами в нетерпении и казалась весьма бодрой, несмотря на ранний час."
+
+    captain "Все хорошо?"
+    firstman "Предполетная подготовка закончена! Склад загружен, документы заполнены. Но лучше загляни в двигательный отсек, Рикке там всё ещё что-то паяет."
+
+    menu:
+        "Что сказать?"
+
+        "А в жизни как? Как дела дома?":
+            firstman "А как может быть дома у человека, который там не бывает?"
+            "Судя по её улыбке, старпома такой расклад дел вполне устраивал."
+        
+        "Ну, бывай. Жду на мостике, как закончу обход.":
+            pass
