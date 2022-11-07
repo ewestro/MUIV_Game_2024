@@ -14,12 +14,20 @@ define engineer = Character('Техник', color= "#c8ffc8")
 
 
 
+
 init:
 # Тут можно объявлять изображения, но никто не мешает делать это прямо в сценах ( даже нужно так делать, особенно актуально для одиночных ивентов, нечего захламлять код)
-    image bg Чуркостан = "Images/Чуркостан.jpg"
-    image bg Какой-то бомжара = "Images/Какой-то бомжара.jpg"
-    image captain_img = "Images/captain(400x400).png"
-    image doctor_img = "Images/doctor(400x400).png"
+    image bg port = "Images/background/port.jpg"
+    #image bg 2 = "Images/background/2.jpg"
+    #image bg 3 = "Images/background/3.jpg"
+    #image bg 4 = "Images/background/4.jpg"
+    #image bg 5 = "Images/background/5.jpg"
+    #image bg 6 = "Images/background/6.jpg"
+    #image bg 7 = "Images/background/7.jpg"
+    #image bg 8 = "Images/background/8.jpg"
+    #image bg 9 = "Images/background/9.jpg"
+    #image captain_img = "Images/characters/captain(400x400).png"
+    #image doctor_img = "Images/characters/doctor(400x400).png"
    # image firstman_img = ""
    # image coordinator_img = ""
    # image signal_img = ""
@@ -29,44 +37,22 @@ init:
    # image engineer_img  = ""
 
 label start:
-    scene bg Чуркостан with dissolve 
+    scene bg port with dissolve
+    "Корабль, пришвартованный у самого края провинциального космопорта, ничем не выделялся на фоне окружающего пейзажа."
+    "Потрепанная металлическая обшивка сливалась с серыми панелями стен, пустые иллюминаторы едва отражали тусклый свет."
+    "Когда-то эта модель была образцом грузового транспорта, но теперь от её былой славы осталась лишь полуоблупившиеся и поблекшие языки пламени, нарисованные по бокам корабля."
+    "И все-таки в иллюминаторах иногда вспыхивали лампы, а обшивка правого борта переливалась серебром в холодном свете звёзд."
+    "Человеку достаточно мечтательному этот вид мог бы даже показаться красивым."
 
-#Сцена с капитаном
-    show captain_img with moveinleft
-    captain "Привет,я Капитан"
 menu:
-    "Ты видишь капитана?"
+    "Выберите действие"
 
-    "Нет,я его не вижу":
-        "Ну ты и слепое существо"
-
-    "Да, вот он , стоит передо мной":
-        "Ты красавчик)"
-
-label after_menu:
-    "А сейчас посмотрим на Доктора"
-
-
-#Сцена с доктором
-    scene bg Какой-то бомжара with fade
-    show doctor_img with moveinright
-    doctor "Привет,я Доктор"
-menu:
-    "Что сказать доктору?"
-
-    "Слыш,Айболит,Чирик есть,гыы?":
-        "Вас кинули с прогиба."
-
-    "Давай 0,5 на двоих?":
-        "Вы ввязались в драку с чурками. Айболит раскидал их как детей. Вы сделали выводы. Сделали же:? "
-
-    "Промолчать":
+    "Посмотреть еще":
+        captain "Как же он хорош."
+        "Постояв еще какое-то время, капитан вошел внутрь"
+        
+    "Пойти внутрь":
         pass
 
-    #firstman "Привет,я Рулевой"
-    #coordinator "Привет,я Координатор"
-    #signal "Привет,я Связист"
-    #secure "Привет,я Начальник Охраны"
-    #secondman "Привет,я Старпом"
-    #cook "Привет,я Кок"
-    #engineer "Привет,я Техник"
+label after_menu:
+    "Палуба встретила капитана тусклым дежурным освещением."
