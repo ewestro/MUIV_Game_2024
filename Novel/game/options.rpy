@@ -23,7 +23,7 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "1.0"
+define config.version = "0.1"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
@@ -62,7 +62,7 @@ define config.has_voice = True
 ## проигрываться в главном меню. Этот файл продолжит проигрываться во время
 ## игры, если не будет остановлен, или не начнёт проигрываться другой аудиофайл.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = "audio/main_menu_music.ogg"
 
 
 ## Переходы ####################################################################
@@ -121,7 +121,7 @@ define config.window_hide_transition = Dissolve(.2)
 ## в то время как любая другая цифра — это количество символов, печатаемых в
 ## секунду.
 
-default preferences.text_cps = 0
+default preferences.text_cps = 20
 
 
 ## Стандартная задержка авточтения. Большие значения означают долгие ожидания, а
@@ -151,7 +151,7 @@ define config.save_directory = "Novel-1667596094"
 ##
 ## Иконка, показываемая на панели задач или на dock.
 
-define config.window_icon = "gui/window_icon.png"
+define config.window_icon = "gui/general_icon.png"
 
 
 ## Настройка Дистрибутива ######################################################
