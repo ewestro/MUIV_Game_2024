@@ -7,7 +7,7 @@ define secondman = Character('Рулевой', color= "#c8ffc8")
 define coordinator = Character('Координатор', color= "#c8ffc8")
 define signal = Character('Связист', color= "#c8ffc8")
 define secure = Character('Начальник Охраны', color= "#c8ffc8")
-define doctor = Character('Доктор', color= "#00FF00")
+define medic = Character('Медик', color= "#00FF00")
 define cook = Character('Кок', color= "#c8ffc8")
 define engineer = Character('Техник', color= "#c8ffc8")
 
@@ -20,12 +20,14 @@ init:
     image bg corridor = "Images/background/corridor.jpg"
     image bg gostinnaya = "Images/background/gostinnaya.jpeg"
     image bg kitchen = "Images/background/kitchen.jpg"
+    image bg clinic = "Images/background/clinic.jpg"
 
     # изображения персонажей .
     image captain_img = "Images/characters/captain.png"
     image firstman_img = "Images/characters/firstman.png"
     image secondman_img = "Images/characters/secondman.png"
     image cook_img = "Images/characters/cook.png"
+    image medic_img = "Images/characters/medic.png"
 
 label start:
     scene bg port with dissolve
@@ -35,7 +37,7 @@ label start:
     "И все-таки в иллюминаторах иногда вспыхивали лампы, а обшивка правого борта переливалась серебром в холодном свете звёзд."
     "Человеку достаточно мечтательному этот вид мог бы даже показаться красивым."
 
-    menu:
+    menu before_enter_the_ship:
         "Выберите действие"
 
         "Посмотреть еще":
@@ -45,7 +47,7 @@ label start:
             "Постояв еще какое-то время, капитан вошел внутрь."
         
         "Пойти внутрь":
-            pass
+            "Капитан сразу же направился вглубь корабля"
 
 
 
@@ -61,7 +63,7 @@ label start:
     firstman "Предполетная подготовка закончена! Склад загружен, документы заполнены. Но лучше загляни в двигательный отсек, Рикке там всё ещё что-то паяет."
     hide firstman
 
-    menu:
+    menu firstman_scene:
         "Что сказать?"
 
         "А в жизни как? Как дела дома?":
@@ -123,17 +125,108 @@ label start:
     show cook at right
     cook "Капитан, ты ко времени! Все готово. Еда на складу, я в мылу."
     hide cook
-    show captain at left
-    captain "Есть что-то вкусненькое?"
-    hide captain
-    show cook at right
-    cook "А шо, готовое уже не годно? Чай, сам сухпайки выбирал."
-    hide cook
-    show captain at left
-    captain "Есть что-то новое?"
-    hide captain
-    show cook
-    cook "А то! Купила себе книжку рецептов с Фольмагаута в увольнении, и вот начала уже готовить."
-    hide cook
-    show captain at left
-    captain "Раз такое дело, пойду-ка. Не буду мешать."
+    
+    menu kitchen:
+        "Что спросить?"
+  
+        "Есть что-то вкусненькое?":
+            show cook at right
+            cook "А шо, готовое уже не годно? Чай, сам сухпайки выбирал."
+            hide cook
+            show captain at left
+            captain "Так это же сухпайки, чего от них ждать. Ну да ладно, я ведь знаю, что ты нас чем-нибудь порадуешь. Не буду отвлекать."
+            hide captain
+   
+        "Есть что-то новое?":
+            show cook at right
+            cook "А то! Купила себе книжку рецептов с Фольмагаута в увольнении, и вот начала уже готовить."
+            hide cook
+            show captain at left
+            captain "Раз такое дело, пойду-ка. Не буду мешать."
+            hide captain
+    
+    label after_menu_kitchen:
+        "Выйдя в коридор, капитан остановился. У него всё ещё оставалось несколько отсеков, которые ему нужно было посетить прежде, чем он отправится на мостик."
+
+
+# Ниже представлен тот самый случай, когда ивенты нельзя прописывать подряд, ибо они являются вариативными, и могут запускаться в произвольном порядке.
+
+    menu Choice_Loop:
+        "Куда пойти дальше?"
+
+        "Идти в медпункт":
+            jump clinic_ivent
+
+        "Идти к технику":
+            pass
+
+        "Идти в связную":
+            pass
+
+        "Идти на мостик":
+            pass
+
+
+    label clinic_ivent:
+        scene bg clinic with dissolve
+        "Из раскрытой двери в медостсек в коридор лился яркий резкий свет."
+        "Приблизившись, капитан почувствовал лёгкий запах лекарств."
+        "В медостсеке было пусто. Некоторые шкафы были распахнуты, а на одной из кушеток стоял раскрыты ящик."
+
+        show captain at left
+        captain "{i}Кажется, мне стоит посмотреть есть ли кто-то за шкафом.{/i}"
+        hide captain
+        "..."
+        medic "Уже иду! Если это срочно, бинты в левом шкафу!"
+        "..."
+        medic "Почти пришёл!"
+        "Из вторых дверей в глубине медотсека наконец-то показался медик."
+        show medic at right
+        medic "Капитан! Какими судьбами?"
+        hide medic
+        show captain at left
+        captain "Предполетный обход. Все в порядке?"
+        hide captain
+        show medic at right
+        medic "В полном."
+        hide medic
+        show captain at left
+        captain "Лекарств хватает?"
+        hide captain
+        show medic at right
+        medic "Разумеется."
+        hide medic
+        show captain at left
+        captain "Техника в норме?"
+        hide captain
+        show medic at right
+        medic "Еще бы!"
+        hide medic
+        show captain at left
+        captain "Ты как?"
+        hide captain
+        show medic at right
+        medic "Всё никак не дождусь возможности расстаться с твёрдой землёй под ногами."
+        hide medic
+
+    menu clinic:
+        "Что еще сказать?"
+            
+        "Как твоя дочка то?":
+            show medic at right
+            medic "Позвонила вот на той неделе. Разговоры у нас всё не клеятся, но она хоть сама иногда меня проведывает теперь. И рассказывает, чем живёт. Сухо, но рассказывает. Про повышение, про друзей своих, про новые проекты – про них, конечно, больше всего."
+            hide medic
+            show captain at left
+            captain "Вся в тебя, а?"
+            hide captain
+            show medic at right
+            medic "Родная – и та больше похожа не была б."
+            hide medic
+
+        
+        "Отправимся, как закончу обход" :
+            pass
+        
+    label after_menu_clinic:
+        "Капитан кивнул ему и, бросив последний взгляд на ящик на кушетке, отправился дальше"
+        jump Choice_Loop
