@@ -21,6 +21,7 @@ init:
     image bg gostinnaya = "Images/background/gostinnaya.jpeg"
     image bg kitchen = "Images/background/kitchen.jpg"
     image bg clinic = "Images/background/clinic.jpg"
+    image bg utility = "Images/background/utility.jpg"
 
     # изображения персонажей .
     image captain_img = "Images/characters/captain.png"
@@ -28,6 +29,7 @@ init:
     image secondman_img = "Images/characters/secondman.png"
     image cook_img = "Images/characters/cook.png"
     image medic_img = "Images/characters/medic.png"
+    image engineer_img= "Images/characters/engineer.png"
 
 label start:
     scene bg port with dissolve
@@ -158,7 +160,7 @@ label start:
             jump clinic_ivent
 
         "Идти к технику":
-            pass
+            jump engineer_ivent
 
         "Идти в связную":
             pass
@@ -229,4 +231,95 @@ label start:
         
     label after_menu_clinic:
         "Капитан кивнул ему и, бросив последний взгляд на ящик на кушетке, отправился дальше"
+        jump Choice_Loop
+
+
+    
+    label engineer_ivent :
+        scene bg utility with dissolve
+        "Поднимаясь по ступенькам к генератору, капитан почувствовал слабый запах гари."
+        "За распахнутыми дверьми в дальнем углу огромного двигательного отсека сгорбилась фигура со сваркой в руках"
+        show captain at left
+        captain " Я надеюсь, ты не чинишь корабль перед отлетом?"
+        hide captain
+        "..."
+
+        menu scream:
+            "Что делать дальше?" 
+
+            "Крикнуть":
+                show captain at left
+                captain "Я ГОВОРЮ С ЛЕЙТЕНАНТОМ ФРЕДЕРИККЕ ЭЙНСЛИ!"
+                hide captain
+
+            "Подождать":
+                pass
+
+        label after_menu_scream:
+        "Сварка погасла. Женщина сняла маску, распрямилась и наконец-то обернулась к капитану"
+        
+        scene bg utility
+        show engineer at right
+        engineer " О, Кэп. И давно ты тут?"
+        hide engineer
+        show captain at left
+        captain "Да не особо. Ты ведь не чинишь корабль прямо перед вылетом?"
+        hide captain
+        show engineer at right
+        engineer "Что? Конечно, нет."
+        hide engineer
+        show captain at left 
+        captain "Чем ты тогда тут занимаешься?"
+        hide captain
+        show engineer at right
+        engineer "О, я просто решила укрепить двигатель. В прошлый раз мы попали в пространственную дыру, нас нехило потрясло."
+        hide engineer
+        show captain at left
+        captain "Да, я помню."
+        hide captain
+        show engineer at right
+        engineer "вот я и решила укрепить двигатель, что бы он смог вынести и более сильные тряски."
+        hide engineer
+        show captain at left
+        captain " И ты делаешь это сейчас, потому что?.."
+        hide captain
+        show engineer at right
+        engineer "Основные работы были сделаны до этого. Сейчас мне наконец-то доставили нужный каркас, который скроет крепежи."
+        hide engineer
+        show captain at left
+        captain "Так ты просто делаешь красиво?"
+        hide captain
+        show engineer at right
+        engineer "Ну, по сути да. Техника ведь должна быть красивой."
+        hide engineer
+        show captain at left
+        captain "Не опасно? Она не отвалиться?"
+        hide captain
+        show engineer at right
+        engineer "Ну, этот конкретный каркас не так важен. Главное, чтобы двигатель не отлетел. А он теперь не отлетит."
+        hide engineer
+        show captain at left
+        captain "Ладно. Что по состоянию корабля?"
+        hide captain
+        show engineer at left
+        engineer "Отчёт я отправила десять минут назад."
+        hide engineer
+
+        "Женщина надела маску, отвернулась и, вновь включив сварку, принялась работать."
+        "Капитан отправился к выходу, по пути открыв свой планшет."
+        "Он хмыкнул, отметив, что отчёт пришёл лишь несколькими минутами ранее."
+        "Отчет о состоянии корабля"
+        "Внешняя обшивка – 69 процента (сильный износ и множество повреждений. Необходима замена внешних слоев, пока это не привело к критическим значениям)"
+        "Готовность к критическим ситуация – 6/10 (на данный момент внешняя обшивка может выдержать несколько средних ударов или пару пролетов через пространственные дыры. Далее передвижение на нем будет критически опасным)"
+        "Внутренняя обшивка – 82 процента (в некоторых местах весьма изношена, но вполне пригодна для эксплуатации. Замены в ближайшее время не требуется)"
+        "Генераторы – 89 процента (смена нескольких ступеней на современное топливо привела к увеличению мощности, укрепление крепежей привело к более устойчивому состоянию. Неизвестно, как поведет себя смесь двух жидкостей при экстремально высоких или низких температур.)"
+        "Внутреннее оборудование – 94 процента (обновленное ПО, смена карт и ИИ модуля привела к улучшению работы внутреннего оборудования. Некоторые компоненты еще состыковываются, от этого происходит задержка общих уведомлений.)"
+        "Общее состояние корабля – 79 процентов »"
+        "{i}Одобрено к вылету по установленным безопасным маршрутам.{/i}"
+
+
+        show captain at left
+        captain " Вполне сносно для нашего задания."
+        hide captain
+        "Пояснений к отчёту не требовалось, поэтому капитан вышел из двигательного отсека и отправился дальше."
         jump Choice_Loop
