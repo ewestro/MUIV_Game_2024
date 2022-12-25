@@ -22,6 +22,7 @@ init:
     image bg kitchen = "Images/background/kitchen.jpg"
     image bg clinic = "Images/background/clinic.jpg"
     image bg utility = "Images/background/utility.jpg"
+    image bg signal_room ="Images/background/signal_room.jpg"
 
     # изображения персонажей .
     image captain_img = "Images/characters/captain.png"
@@ -30,6 +31,10 @@ init:
     image cook_img = "Images/characters/cook.png"
     image medic_img = "Images/characters/medic.png"
     image engineer_img= "Images/characters/engineer.png"
+    image signal_img = "Images/characters/signal.png"
+
+
+#Тут начинается сюжет.
 
 label start:
     scene bg port with dissolve
@@ -52,6 +57,7 @@ label start:
             "Капитан сразу же направился вглубь корабля"
 
 
+# Сцена в коридоре/палубе
 
     scene bg corridor with dissolve
     "Палуба встретила капитана тусклым дежурным освещением."
@@ -80,7 +86,9 @@ label start:
         "Ну, бывай. Жду на мостике, как закончу обход.":
             pass
     
-    
+
+#Сцена в бытовом отсеке
+
     scene bg gostinnaya with dissolve
     "Первым отсеком на пути капитана был бытовой."
     "Двери в кают-компанию были открыты, и на большом диване у противоположной стены клевал носом рулевой, заложив руки за голову."
@@ -111,6 +119,8 @@ label start:
     secondman "Тогда иди, заканчивай свой осмотр."
     hide secondman
 
+
+#Сцена на кухне
 
     scene bg kitchen with dissolve
     "Следующей остановкой в списке была кухня."
@@ -163,11 +173,12 @@ label start:
             jump engineer_ivent
 
         "Идти в связную":
-            pass
+            jump server_room_ivent
 
         "Идти на мостик":
             pass
 
+#Сцена в медотсеке
 
     label clinic_ivent:
         scene bg clinic with dissolve
@@ -308,6 +319,7 @@ label start:
         "Женщина надела маску, отвернулась и, вновь включив сварку, принялась работать."
         "Капитан отправился к выходу, по пути открыв свой планшет."
         "Он хмыкнул, отметив, что отчёт пришёл лишь несколькими минутами ранее."
+        
         "Отчет о состоянии корабля"
         "Внешняя обшивка – 69 процента (сильный износ и множество повреждений. Необходима замена внешних слоев, пока это не привело к критическим значениям)"
         "Готовность к критическим ситуация – 6/10 (на данный момент внешняя обшивка может выдержать несколько средних ударов или пару пролетов через пространственные дыры. Далее передвижение на нем будет критически опасным)"
@@ -323,3 +335,63 @@ label start:
         hide captain
         "Пояснений к отчёту не требовалось, поэтому капитан вышел из двигательного отсека и отправился дальше."
         jump Choice_Loop
+
+
+#Сцена в переговорной
+
+    label server_room_ivent:
+        
+        scene bg signal_room with dissolve
+        
+        "Переговорная была оборудована самой удобной и современной мебелью."
+        "Сейчас, впрочем, и овальный стол, и большинство кресел были уставлены техникой."
+        "За дальним концом, отвоевав себе немного свободного места, сидела небольшая девушка."
+        "На ней была объёмная гарнитура и она, должно быть, даже не услышала шагов"
+
+        show signal at right
+        signal "Код 113. Повторяю, код 113."
+        hide signal
+        "Капитан сел в единственное свободное кресло, вздохнул, почувствовав невероятный комфорт"
+        show signal at right
+        signal "Альфа-57, Бета-25, как слышно?"
+        signal "Отлично."
+        signal "Заканчиваю связь"
+        hide signal
+
+        "Связистка сняла гарнитур, откинувшись на спинку кресла."
+        show captain at left
+        captain " Как дела?"
+        hide captain
+        show signal at right
+        signal "Нейронные сети! Вы чего пугаете?!"
+        hide signal
+
+        menu choice:
+            "Что ответить?"
+
+            "Извиниться":
+                show captain at left
+                " Прости, думал, ты видела меня."
+                hide captain
+                show signal at right
+                signal "Ничего страшного."
+                hide signal
+                show captain at left
+                captain "Так как там подготовка?"
+                hide captain
+
+            "Перейти к делу":
+                show captain at left
+                "Я пришел убедиться в готовности."
+                hide captain
+
+        label after_menu_choice:
+            show signal at right
+            "Практически закончена! Осталось наладить связь между командой. А то не дело полагаться на личные частоты для работы."
+            hide signal
+        show captain at left
+        captain "Лучше поторопись. Я почти закончил обход."
+        hide captain
+        show signal at right
+        signal "Да,капитан."
+        hide signal
