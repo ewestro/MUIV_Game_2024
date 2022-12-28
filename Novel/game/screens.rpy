@@ -551,15 +551,15 @@ screen about():
         style_prefix "about"
 
         vbox:
-            spacing 23
-            label "Персонажи"
+            label _("Enter")
+            text _("Прохождение диалогов, активация интерфейса.")
+
+        hbox:
+            label _("Enter")
+            text _("Прохождение диалогов, активация интерфейса.")
 
 
-            ## gui.about обычно установлено в options.rpy.
-            if gui.about:
-                text "[gui.about!t]\n"
-
-            text _("test")
+       
 
 
 style about_label is gui_label

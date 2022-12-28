@@ -2,14 +2,15 @@
 # Объявляем персонажей (легче обращаться к сущностям, чем каждый раз прописывать их заново)
 
 define captain = Character('Капитан', color= "#4287f5")
-define firstman = Character('Старпом', color= "#FF0000")
+define firstman = Character('Старпом', color="#c8ffc8" )
 define secondman = Character('Рулевой', color= "#c8ffc8")
 define coordinator = Character('Координатор', color= "#c8ffc8")
 define signal = Character('Связист', color= "#c8ffc8")
-define secure = Character('Начальник Охраны', color= "#c8ffc8")
+define secureman = Character('Начальник Охраны', color="#FF0000" )
 define medic = Character('Медик', color= "#00FF00")
 define cook = Character('Кок', color= "#c8ffc8")
 define engineer = Character('Техник', color= "#c8ffc8")
+define unknown = Character('???', color="#FF0000" ) #Используется в сценах,где не ясно, кто перед находится перед нами.
 
 
 init:
@@ -23,8 +24,9 @@ init:
     image bg clinic = "Images/background/clinic.jpg"
     image bg utility = "Images/background/utility.jpg"
     image bg signal_room ="Images/background/signal_room.jpg"
+    image bg armory_room="Images/background/armory_room.jpg"
 
-    # изображения персонажей .
+    # Изображения персонажей .
     image captain_img = "Images/characters/captain.png"
     image firstman_img = "Images/characters/firstman.png"
     image secondman_img = "Images/characters/secondman.png"
@@ -32,11 +34,13 @@ init:
     image medic_img = "Images/characters/medic.png"
     image engineer_img= "Images/characters/engineer.png"
     image signal_img = "Images/characters/signal.png"
+    image secureman_img="Images/characters/secureman.png"
 
 
 #Тут начинается сюжет.
 
 label start:
+    stop music 
     scene bg port with dissolve
     "Корабль, пришвартованный у самого края провинциального космопорта, ничем не выделялся на фоне окружающего пейзажа."
     "Потрепанная металлическая обшивка сливалась с серыми панелями стен, пустые иллюминаторы едва отражали тусклый свет."
@@ -61,7 +65,7 @@ label start:
 
     scene bg corridor with dissolve
     "Палуба встретила капитана тусклым дежурным освещением."
-    "Через несколько поворотов он вышел к складу, где его уже ждала старшая помощница."
+    "В коридоре его уже ждала старшая помощница."
     "Она барабанила пальцами в нетерпении и казалась весьма бодрой, несмотря на ранний час."
 
     show captain at left
@@ -121,7 +125,6 @@ label start:
 
 
 #Сцена на кухне
-
     scene bg kitchen with dissolve
     "Следующей остановкой в списке была кухня."
     "Оттуда уже во всю доносились звуки и запахи готовки."
@@ -129,9 +132,9 @@ label start:
     show captain at left
     captain " Могу поинтересоваться, как все подготовлено?"
     hide captain
-    #тут должен быть звук грохота посуды, но пока его нет
+    play sound "audio/ivent_sounds/tableware_drop.mp3"
     show cook at right
-    cook " Ох ты ж!"
+    cook " Ох ты ж..."
     hide cook
     "Кок недовольно повернулась лицом к двери, уперев руки в бока, и тут же просияла, увидев капитана."
     show cook at right
@@ -159,6 +162,9 @@ label start:
     
     label after_menu_kitchen:
         "Выйдя в коридор, капитан остановился. У него всё ещё оставалось несколько отсеков, которые ему нужно было посетить прежде, чем он отправится на мостик."
+        show captain at left
+        captain "Нужно еще проверить готовность у остальных, прежде чем идти на мостик."
+        hide captain
 
 
 # Ниже представлен тот самый случай, когда ивенты нельзя прописывать подряд, ибо они являются вариативными, и могут запускаться в произвольном порядке.
@@ -175,8 +181,8 @@ label start:
         "Идти в связную":
             jump server_room_ivent
 
-        "Идти на мостик":
-            pass
+        "Идти в оружейную":
+            jump armory_room_event
 
 #Сцена в медотсеке
 
@@ -244,7 +250,7 @@ label start:
         "Капитан кивнул ему и, бросив последний взгляд на ящик на кушетке, отправился дальше"
         jump Choice_Loop
 
-
+#Сцена в двигательном отсеке.
     
     label engineer_ivent :
         scene bg utility with dissolve
@@ -366,7 +372,7 @@ label start:
         signal "Нейронные сети! Вы чего пугаете?!"
         hide signal
 
-        menu choice:
+        menu server_room_choice:
             "Что ответить?"
 
             "Извиниться":
@@ -385,7 +391,7 @@ label start:
                 "Я пришел убедиться в готовности."
                 hide captain
 
-        label after_menu_choice:
+        label after_server_menu_choice:
             show signal at right
             "Практически закончена! Осталось наладить связь между командой. А то не дело полагаться на личные частоты для работы."
             hide signal
@@ -395,3 +401,58 @@ label start:
         show signal at right
         signal "Да,капитан."
         hide signal
+        jump Choice_Loop
+
+#Сцена в оружейной комнате
+
+    label armory_room_event:
+        scene bg armory_room with dissolve
+        "В гробовой тишине оружейной лишь тихо потрескивала тусклая лампа над входом."
+        show captain at left
+        captain "Есть тут кто?"
+        hide captain
+        play music "audio/music/dangerous.mp3" 
+        unknown "Какие предположения?"
+        hide unknown
+        "В самом далеком и темном углу сидел мужчина, протирая рукоятку бластера."
+        show captain at left
+        captain "От тебя не было сообщений."
+        hide captain
+        show secureman at right
+        secureman "И должно быть, я испарился. Не работал же, в самом деле."
+        hide secureman
+        "Начальник безопасности повернулся спиной к капитану, убирая на место многочисленные принадлежности для чистки оружия." 
+        "Капитан заметил в шкафу рядом с собой бластер."
+
+        menu gun_ewent:
+            "Что делать дальше?" 
+
+            "Схватить бластер":
+                show captain at left
+                captain "Руки вверх!"
+                hide captain
+                show secureman at right
+                secureman "..."
+                hide secureman
+                "Мичи замер. Повисла тишина."
+                "В какую-то долю секунды начальник охраны уже оказался рядом, свободной рукой уведя бластер к потолку. Во второй же был начищенный бластер, который он прижал к голове капитана."
+                show secureman at right
+                secureman "Все готово капитан. {i}Ко всему{/i}."
+                hide secureman
+                show captain at left
+                captain "Теперь вижу."
+                hide captain
+
+            "Не трогать":
+                pass
+
+        label after_gun_ewent:
+            stop music fadeout 5
+            show secureman at right
+            secureman "Еще что-то?"
+            hide secureman
+            show captain at left
+            captain " Нет. На этом все."
+            captain "До связи."
+            hide captain
+            jump Choice_Loop

@@ -1,4 +1,4 @@
 *.txt
 saves
 cache
-rpyc
+*.rpyc
