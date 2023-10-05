@@ -2,3 +2,6 @@
 saves
 cache
 *.rpyc
+.idea
+.vs
+.git
