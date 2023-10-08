@@ -9,21 +9,16 @@ label game_mode_choice:
         "Режим игры"
 
         "Блиц-игра":
-            jump speed_game_mode
+            jump python_time_game_start
 
         "Сборка полноценного кода по кусочкам":
             jump bulding_code_mode
              
-        "Не знаю, что выбрать":
-            jump i_dont_known
+        "Экзамен":
+            jump python_exam_start
 
 
 
-label speed_game_mode:
-    pass
 
 label bulding_code_mode:
     #pass
-
-label i_dont_known:
-   # pass
