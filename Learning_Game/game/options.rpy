@@ -12,7 +12,7 @@
 ##
 ## Символы "_()", окружающие название, отмечают его как пригодное для перевода.
 
-define config.name = _("Novel")
+define config.name = _("Learning Game")
 
 
 ## Определяет, показывать ли заголовок, данный выше, на экране главного меню.
@@ -23,7 +23,7 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "0.1 alpha"
+define config.version = "0.2 alpha"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
@@ -37,7 +37,7 @@ define gui.about = _p("""
 ## постройке дистрибутивов. Оно должно содержать текст формата ASCII и не должно
 ## содержать пробелы, двоеточия и точки с запятой.
 
-define build.name = "Novel"
+define build.name = "Learning Game"
 
 
 ## Звуки и музыка ##############################################################
@@ -62,7 +62,7 @@ define config.has_voice = True
 ## проигрываться в главном меню. Этот файл продолжит проигрываться во время
 ## игры, если не будет остановлен, или не начнёт проигрываться другой аудиофайл.
 
-define config.main_menu_music = "audio/music/main_menu_music.mp3"
+define config.main_menu_music = "content/audio/music/main_menu_music.mp3"
 
 
 ## Переходы ####################################################################
@@ -151,7 +151,7 @@ define config.save_directory = "Novel-1667596094"
 ##
 ## Иконка, показываемая на панели задач или на dock.
 
-define config.window_icon = "gui/general_icon.png"
+define config.window_icon = "/gui/general_icon.png"
 
 
 ## Настройка Дистрибутива ######################################################
