@@ -17,7 +17,8 @@ init:                   #Предварительные моменты игры
         #image bgs class_2=                  "content/images/backgrounds/classes/"
         #image bgs class_3=                  "content/images/backgrounds/classes/"
         #image bgs class_4                   "content/images/backgrounds/classes/"
-
+        image bgs blackboard =               "content/images/backgrounds/boards/blackboard.jpg"
+        image bgs fail =                     "content/images/backgrounds/others/fail.jpg"
     # Изображения вышеобъявленных персонажей (img = image).
         #image first_player_img =           "content/images/characters/first_player.png"          #Изображение первого игрока
         #image second_player_img =          "content/images/characters/second_player.png"         #Изображение второго игрока
@@ -44,7 +45,8 @@ label number_of_players:    # Меню выбора количества игр�
             jump one_player
         "2 игрока":
             jump two_players
-
+        "Debug":
+            jump python_exam_start
 
 label one_player: # Если выбран 1 игрок
     "Вы выбрали режим игры для одного игрока."
