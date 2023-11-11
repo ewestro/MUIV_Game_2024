@@ -151,7 +151,7 @@ define config.save_directory = "Novel-1667596094"
 ##
 ## Иконка, показываемая на панели задач или на dock.
 
-define config.window_icon = "/gui/general_icon.png"
+define config.window_icon = "/gui/logo.png"
 
 
 ## Настройка Дистрибутива ######################################################
