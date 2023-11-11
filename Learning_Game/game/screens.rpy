@@ -317,7 +317,7 @@ screen navigation():
 
             textbutton _("Главное меню") action MainMenu()
 
-        textbutton _("О Персонажах игры") action ShowMenu("about")
+        textbutton _("Об игре") action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
@@ -551,12 +551,15 @@ screen about():
         style_prefix "about"
 
         vbox:
-            label _("Enter")
-            text _("Прохождение диалогов, активация интерфейса.")
 
-        hbox:
-            label _("Enter")
-            text _("Прохождение диалогов, активация интерфейса.")
+            label "[config.name!t]"
+            text _("Версия [config.version!t]\n")
+
+            ## gui.about обычно установлено в options.rpy.
+            if gui.about:
+                text "[gui.about!t]\n"
+
+            text _("Сделано с помощью {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
 
 
        
@@ -568,6 +571,7 @@ style about_text is gui_text
 
 style about_label_text:
     size gui.label_text_size
+
 
 
 ## Экраны загрузки и сохранения ################################################

@@ -12,7 +12,7 @@
 ##
 ## Символы "_()", окружающие название, отмечают его как пригодное для перевода.
 
-define config.name = _("Learning Game")
+define config.name = _("Moscow Witte University")
 
 
 ## Определяет, показывать ли заголовок, данный выше, на экране главного меню.
@@ -23,7 +23,7 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "0.2 alpha"
+define config.version = "0.4 beta"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
