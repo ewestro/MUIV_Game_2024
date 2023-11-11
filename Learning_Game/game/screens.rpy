@@ -410,9 +410,9 @@ style main_menu_version:
 ## Всё это показывает основную, обобщённую структуру экрана игрового меню. Он
 ## вызывается с экраном заголовка и показывает фон, заголовок и навигацию.
 ##
-## Параметр scroll может быть None, или "viewport", или "vpgrid", когда этот
-## экран предназначается для использования с более чем одним дочерним экраном,
-## включённым в него.
+## Параметр scroll может быть None или один из "viewport" или "vpgrid". Этот
+## экран предназначен для использования с одним или несколькими дочерними
+## элементами, которые трансклюдируются (помещаются) внутрь него.
 
 screen game_menu(title, scroll=None, yinitial=0.0):
 
@@ -562,16 +562,12 @@ screen about():
             text _("Сделано с помощью {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
 
 
-       
-
-
 style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
 
 style about_label_text:
     size gui.label_text_size
-
 
 
 ## Экраны загрузки и сохранения ################################################
@@ -650,27 +646,40 @@ screen file_slots(title):
                         key "save_delete" action FileDelete(slot)
 
             ## Кнопки для доступа к другим страницам.
-            hbox:
+            vbox:
                 style_prefix "page"
 
                 xalign 0.5
                 yalign 1.0
 
-                spacing gui.page_spacing
+                hbox:
+                    xalign 0.5
 
-                textbutton _("<") action FilePagePrevious()
+                    spacing gui.page_spacing
 
-                if config.has_autosave:
-                    textbutton _("{#auto_page}А") action FilePage("auto")
+                    textbutton _("<") action FilePagePrevious()
 
-                if config.has_quicksave:
-                    textbutton _("{#quick_page}Б") action FilePage("quick")
+                    if config.has_autosave:
+                        textbutton _("{#auto_page}А") action FilePage("auto")
 
-                ## range(1, 10) задаёт диапазон значений от 1 до 9.
-                for page in range(1, 10):
-                    textbutton "[page]" action FilePage(page)
+                    if config.has_quicksave:
+                        textbutton _("{#quick_page}Б") action FilePage("quick")
 
-                textbutton _(">") action FilePageNext()
+                    ## range(1, 10) задаёт диапазон значений от 1 до 9.
+                    for page in range(1, 10):
+                        textbutton "[page]" action FilePage(page)
+
+                    textbutton _(">") action FilePageNext()
+
+                if config.has_sync:
+                    if CurrentScreenName() == "save":
+                        textbutton _("Синхронизация загрузки"):
+                            action UploadSync()
+                            xalign 0.5
+                    else:
+                        textbutton _("Скачать Sync"):
+                            action DownloadSync()
+                            xalign 0.5
 
 
 style page_label is gui_label
@@ -688,7 +697,7 @@ style page_label:
     ypadding 5
 
 style page_label_text:
-    text_align 0.5
+    textalign 0.5
     layout "subtitle"
     hover_color gui.hover_color
 
@@ -936,7 +945,7 @@ style history_name:
 
 style history_name_text:
     min_width gui.history_name_width
-    text_align gui.history_name_xalign
+    textalign gui.history_name_xalign
 
 style history_text:
     xpos gui.history_text_xpos
@@ -944,7 +953,7 @@ style history_text:
     xanchor gui.history_text_xalign
     xsize gui.history_text_width
     min_width gui.history_text_width
-    text_align gui.history_text_xalign
+    textalign gui.history_text_xalign
     layout ("subtitle" if gui.history_text_xalign else "tex")
 
 style history_label:
@@ -992,7 +1001,7 @@ screen help():
 screen keyboard_help():
 
     hbox:
-        label _("Enter")
+        label _("Войти")
         text _("Прохождение диалогов, активация интерфейса.")
 
     hbox:
@@ -1016,11 +1025,11 @@ screen keyboard_help():
         text _("Включает режим пропуска.")
 
     hbox:
-        label _("Page Up")
+        label _("Страница вверху")
         text _("Откат назад по сюжету игры.")
 
     hbox:
-        label _("Page Down")
+        label _("Страница вниз")
         text _("Откатывает предыдущее действие вперёд.")
 
     hbox:
@@ -1083,7 +1092,7 @@ screen gamepad_help():
         text _("Навигация по интерфейсу.")
 
     hbox:
-        label _("Start, Guide")
+        label _("Начало, Руководство")
         text _("Вход в игровое меню.")
 
     hbox:
@@ -1113,7 +1122,7 @@ style help_label:
 style help_label_text:
     size gui.text_size
     xalign 1.0
-    text_align 1.0
+    textalign 1.0
 
 
 
@@ -1175,7 +1184,7 @@ style confirm_frame:
     yalign .5
 
 style confirm_prompt_text:
-    text_align 0.5
+    textalign 0.5
     layout "subtitle"
 
 style confirm_button:
@@ -1307,8 +1316,8 @@ screen nvl(dialogue, items=None):
 
             use nvl_dialogue(dialogue)
 
-        ## Displays the menu, if given. The menu may be displayed incorrectly if
-        ## config.narrator_menu is set to True.
+        ## Показывает меню, если есть. Меню может показываться некорректно, если
+        ## config.narrator_menu установлено на True.
         for i in items:
 
             textbutton i.caption:
@@ -1367,7 +1376,7 @@ style nvl_label:
     yanchor 0.0
     xsize gui.nvl_name_width
     min_width gui.nvl_name_width
-    text_align gui.nvl_name_xalign
+    textalign gui.nvl_name_xalign
 
 style nvl_dialogue:
     xpos gui.nvl_text_xpos
@@ -1375,7 +1384,7 @@ style nvl_dialogue:
     ypos gui.nvl_text_ypos
     xsize gui.nvl_text_width
     min_width gui.nvl_text_width
-    text_align gui.nvl_text_xalign
+    textalign gui.nvl_text_xalign
     layout ("subtitle" if gui.nvl_text_xalign else "tex")
 
 style nvl_thought:
@@ -1384,7 +1393,7 @@ style nvl_thought:
     ypos gui.nvl_thought_ypos
     xsize gui.nvl_thought_width
     min_width gui.nvl_thought_width
-    text_align gui.nvl_thought_xalign
+    textalign gui.nvl_thought_xalign
     layout ("subtitle" if gui.nvl_text_xalign else "tex")
 
 style nvl_button:
@@ -1394,6 +1403,95 @@ style nvl_button:
 
 style nvl_button_text:
     properties gui.button_text_properties("nvl_button")
+
+
+## Пузырьковый экран ###########################################################
+##
+## Экран пузырьков используется для отображения диалога игроку при использовании
+## речевых пузырьков. Экран пузырьков принимает те же параметры, что и экран
+## say, должен создать отображаемый объект с id "what", и может создавать
+## отображаемые объекты с id "namebox", "who" и "window".
+##
+## https://www.renpy.org/doc/html/bubble.html#bubble-screen
+
+screen bubble(who, what):
+    style_prefix "bubble"
+
+    window:
+        id "window"
+
+        if who is not None:
+
+            window:
+                id "namebox"
+                style "bubble_namebox"
+
+                text who:
+                    id "who"
+
+        text what:
+            id "what"
+
+style bubble_window is empty
+style bubble_namebox is empty
+style bubble_who is default
+style bubble_what is default
+
+style bubble_window:
+    xpadding 30
+    top_padding 5
+    bottom_padding 5
+
+style bubble_namebox:
+    xalign 0.5
+
+style bubble_who:
+    xalign 0.5
+    textalign 0.5
+    color "#000"
+
+style bubble_what:
+    align (0.5, 0.5)
+    text_align 0.5
+    layout "subtitle"
+    color "#000"
+
+define bubble.frame = Frame("gui/bubble.png", 55, 55, 55, 95)
+define bubble.thoughtframe = Frame("gui/thoughtbubble.png", 55, 55, 55, 55)
+
+define bubble.properties = {
+    "bottom_left" : {
+        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=1),
+        "window_bottom_padding" : 27,
+    },
+
+    "bottom_right" : {
+        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=1),
+        "window_bottom_padding" : 27,
+    },
+
+    "top_left" : {
+        "window_background" : Transform(bubble.frame, xzoom=1, yzoom=-1),
+        "window_top_padding" : 27,
+    },
+
+    "top_right" : {
+        "window_background" : Transform(bubble.frame, xzoom=-1, yzoom=-1),
+        "window_top_padding" : 27,
+    },
+
+    "thought" : {
+        "window_background" : bubble.thoughtframe,
+    }
+}
+
+define bubble.expand_area = {
+    "bottom_left" : (0, 0, 0, 22),
+    "bottom_right" : (0, 0, 0, 22),
+    "top_left" : (0, 22, 0, 0),
+    "top_right" : (0, 22, 0, 0),
+    "thought" : (0, 0, 0, 0),
+}
 
 
 
