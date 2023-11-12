@@ -55,6 +55,7 @@ label test_1_3: # И т.д до бесконечности
         "Неправильный ответ":
             pass
 
+jump scoring
 
 # Тестирование с изображениями
 
@@ -74,7 +75,7 @@ label test_with_images:
 
 
 #Функция проверки набранных пользователем баллов
-
+label scoring:
     if exampoints < 1:
         scene  bgs fail with fade
         centered "К сожалению, вы не сдали экзамен"
