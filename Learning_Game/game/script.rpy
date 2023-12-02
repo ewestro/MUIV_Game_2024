@@ -11,23 +11,13 @@ define unknown = Character                  ('', color="#FF0000" )              
 init:                   #Предварительные моменты игры
     # Фоновые изображения помещений (bgs = backgrounds).
         image bgs muiv =                     "content/images/backgrounds/others/muiv.jpeg"
-        #image bgs corridor_1=               "content/images/backgrounds/corridors/"
-        #image bgs corridor_2=               "content/images/backgrounds/corridors/"
-        #image bgs class_1=                  "content/images/backgrounds/classes/"
-        #image bgs class_2=                  "content/images/backgrounds/classes/"
-        #image bgs class_3=                  "content/images/backgrounds/classes/"
-        #image bgs class_4                   "content/images/backgrounds/classes/"
         image bgs blackboard =               "content/images/backgrounds/boards/blackboard.jpg"
         image bgs fail =                     "content/images/backgrounds/others/fail.jpg"
 
  
-    # Изображения вышеобъявленных персонажей (img = image).
-        #image first_player_img =           "content/images/characters/first_player.png"          #Изображение первого игрока
-        #image second_player_img =          "content/images/characters/second_player.png"         #Изображение второго игрока
+    # Изображения вышеобъявленных персонажей.
         image decan =                       "content/images/characters/decan.png"
-        # image prepod_2_img = ""
-        # image prepod_3_img = ""
-        # image prepod_4_img = ""
+
 
     # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Тут их объявлять нет никакого смысла
 
@@ -35,11 +25,33 @@ init:                   #Предварительные моменты игры
 label start:            #Тут начинается движение игры.
     stop music fadeout 5
     scene bgs muiv with dissolve
-    unknown "Добро пожаловать в университет. В данной игре вы можете практиковаться и обучаться по различным дисциплинам."
-    unknown "Однако, перед началом, выберите количество игроков."
-    jump number_of_players
+    unknown "Добро пожаловать в виртуальный университет."
+    unknown "В данной игре вы можете практиковаться и обучаться по различным дисциплинам."
+    unknown "Пожалуйста, выберите стиль игры. На выбор представлены два варианта: Сюжетный и Свободный."
 
-    
+
+label gamestyle_choice: #Выбор стиля игры
+    menu gamestyle_choice_menu:
+        "Выберите стиль игры:"
+
+        "Сюжетный режим":
+            jump story_mode
+
+        "Свободный режим":
+            jump freedom_mode
+
+        "Отладка":
+            jump debug_start
+
+
+
+label story_mode:
+unknown "В сюжетном режиме вы будете постепенно обучаться. Задания, тесты, экзамены и мини-игры будут открываться по мере прохождения игры."
+
+label freedom_mode:
+unknown "В свободном режиме весь контент сразу же доступен для воспроизведения."
+
+
 label number_of_players:    # Меню выбора количества игроков
     menu players_count:
         "Выберите количество игроков:"
@@ -48,13 +60,26 @@ label number_of_players:    # Меню выбора количества игр�
             jump one_player
         "2 игрока":
             jump two_players
-        "Debug":
-            jump debug_start
+
 
 label one_player: # Если выбран 1 игрок
-    "Вы выбрали одиночный режим игры."
-    unknown "Теперь, введите, пожалуйста, свое имя."
-    jump name_choice_first_player
+
+    jump choice_confirmation
+
+
+label choice_confirmation:
+    menu choice_confirmation_menu:
+        "Вы уверены в своем выборе?:"
+
+        "Да, я уверен":
+            pass
+        "Нет, я передумал":
+            jump number_of_players
+
+unknown "Хорошо,теперь, введите, пожалуйста, свое имя."
+jump name_choice_first_player
+
+
 
 label name_choice_first_player: # Функция input'а имени пользователя (для одичной игры)
     python:
@@ -80,10 +105,10 @@ label name_choice_first_player_coop: # Функция input'а  1 имени и�
         first_player = renpy.input("Игрок 1, введите своё имя.", length=32)
         first_player= first_player.strip() # Обрезаем имя, чтобы в поле ввода не попадали пробелы и лишние знаки.
         if not first_player:
-            first_player = "Студент1"
+            first_player = "Студент 1"
 
      first_player "Меня зовут [first_player]!"
-     unknown "Игрок 2, ваша очередь выбирать имя."
+     unknown "Игрок 2, ваша очередь вводить свое имя."
      jump name_choice_second_player_coop
 
 label name_choice_second_player_coop: # Функция input'а  2 имени игрока (для COOP)
@@ -91,7 +116,7 @@ label name_choice_second_player_coop: # Функция input'а  2 имени и
         second_player = renpy.input("Игрок 2, введите своё имя.", length=32)
         second_player= second_player.strip() # Обрезаем имя, чтобы в поле ввода не попадали пробелы и лишние знаки.
         if not second_player:
-            second_player = "Студент2"
+            second_player = "Студент 2"
 
      second_player "Меня зовут [second_player]!"
      "Приятно познакомиться, [second_player]"
