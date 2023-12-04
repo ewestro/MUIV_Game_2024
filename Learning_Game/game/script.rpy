@@ -7,7 +7,10 @@ define prepod_3 = Character                 ('Преподаватель 1С', c
 define prepod_4 = Character                 ('Преподаватель SQL', color= "#00008B")
 define unknown = Character                  ('', color="#FF0000" )                     #Используется в сценах,где не ясно, кто находится перед нами (Проще говоря, рассказчик).
 
-                                                          
+init -1:
+   $ menu_timer_numeral= False
+   $ menu_timer_graphical = False
+   
 init:                   #Предварительные моменты игры
     # Фоновые изображения помещений (bgs = backgrounds).
         image bgs muiv =                     "content/images/backgrounds/others/muiv.jpeg"
@@ -19,7 +22,7 @@ init:                   #Предварительные моменты игры
         image decan =                       "content/images/characters/decan.png"
 
 
-    # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Тут их объявлять нет никакого смысла
+    # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Объявлять их тут нет никакого смысла.
 
 
 label start:            #Тут начинается движение игры.
@@ -41,7 +44,7 @@ label gamestyle_choice: #Выбор стиля игры
             jump freedom_mode
 
         "Отладка":
-            jump debug_start
+            jump python_time_game_start
 
 
 
