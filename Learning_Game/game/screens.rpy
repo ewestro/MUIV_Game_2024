@@ -205,9 +205,25 @@ style input:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#choice
 
+
+screen timer_numeral: # Экран выбора с числовым таймером
+    timer 1 repeat True action If(time > 0, SetVariable("time", time - 1), [Hide("timer_numeral"), Jump("timeout_marker")])
+    text str(time) xalign 0.5 yalign 0.9
+
+screen timer_graphical: # Экран выбора с графическим таймером
+    timer 1 repeat True action If(time > 1, SetVariable("time", time - 1), [Hide("timer_graphical"), Jump("timeout_marker")])
+    bar value AnimatedValue(0, time, time, time) xalign.5 ypos 30 xmaximum 1500
+
+
+
 screen choice(items):
     style_prefix "choice"
-
+    if menu_timer_numeral == True:
+        use timer_numeral
+    elif menu_timer_graphical == True:
+        use timer_graphical
+    else:
+        pass
     vbox:
         for i in items:
             textbutton i.caption action i.action
