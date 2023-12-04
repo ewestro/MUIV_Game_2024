@@ -54,13 +54,21 @@ label test_1:   #Задание 1
     scene bgs blackboard
     menu test_1_1:
         "Вопрос 1"
-
-        "Правильный ответ":
+        
+        "Какая из следующих функций преобразует строку в список в Python?"
+        
+        "List(mystring)":
             $ exampoints +=  0.5 #Количество баллов, выдаваемое пользователю за правильный ответ 
             jump test_1_2
     
-        "Неправильный ответ":
+        "Eval(mystring)":
             jump test_1_2
+
+        "Repr(mystring)":
+            jump test_1_2
+
+        "Tuple(mystring)":
+           jump test_1_2
 
 label test_1_2: #Задание 2
     menu test_1_2_1:
@@ -90,7 +98,7 @@ jump scoring
 # Тестирование с изображениями
 
 label test_with_images:
-if not persistent.imagetest_unlocked:
+if not persistent.imagetest_unlocked: # Ограничение на доступ с параметром.
     scene black with fade
     centered "Чтобы Разблокировать данный режим, завершите текстовый тест "
     jump choice_exam_variant
@@ -112,7 +120,7 @@ else:
 
 #Функция проверки набранных пользователем баллов
 label scoring:
-    if exampoints < 1:
+    if exampoints <= 1:
         scene  bgs fail with fade
         centered "К сожалению, вы не сдали экзамен"
         $ persistent.imagetest_unlocked = False
