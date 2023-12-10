@@ -68,7 +68,7 @@ label test_1:   #Задание 1
             jump test_1_2
 
         "Tuple(mystring)":
-           jump test_1_2
+            jump test_1_2
 
 label test_1_2: #Задание 2
     menu test_1_2_1:
@@ -96,7 +96,6 @@ jump scoring
 
 
 # Тестирование с изображениями
-
 label test_with_images:
 if not persistent.imagetest_unlocked: # Ограничение на доступ с параметром.
     scene black with fade
@@ -117,23 +116,24 @@ else:
             pass
 
 
-
 #Функция проверки набранных пользователем баллов
 label scoring:
     if exampoints <= 1:
         scene  bgs fail with fade
         centered "К сожалению, вы не сдали экзамен"
         $ persistent.imagetest_unlocked = False
+
     elif exampoints >= 2:
         scene black with fade
         centered "Поздравляем, вы сдали экзамен."
         $ persistent.imagetest_unlocked = True
+
     else:
         scene black with fade
         centered "Удовлетворительно"
         $ persistent.imagetest_unlocked = True
+
 $ exampoints= 0
 
-    
 jump choice_exam_variant
  

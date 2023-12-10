@@ -4,4 +4,5 @@ cache
 *.rpyc
 .idea
 .vs
+.vscode
 .git
