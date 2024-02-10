@@ -2,7 +2,7 @@ label python_time_game_start:
     prepod_2 "Давай сыграем на время: успей ответить  все вопросы, пока таймер не истек."
 
     label QTE_test_1:   #Задание 1
-    $ time = 5
+    $ time = 10
     $ menu_timer_graphical = True
     scene bgs blackboard
     menu QTE_test_1_1:
@@ -13,7 +13,7 @@ label python_time_game_start:
             jump QTE_test_2
            
 label QTE_test_2:
-    $ time = 5
+    $ time = 10
     $ menu_timer_numeral = True
     scene bgs blackboard
     menu QTE_test_2_1:

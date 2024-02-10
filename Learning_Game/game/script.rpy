@@ -13,9 +13,12 @@ init -1: # Объявляем переменные.
     $ menu_timer_graphical = False   #  графический таймер
 
     # Переменные для генератора имени пользователя.
+    $ gender_male = True
     $ first_player = ""
-    $ firstname_list = ["Thomas", "Glenn" , "William", "Ewelina", "Tima"]
-    $ lastname_list = ["Garcia", "Banks", "Johnson", "Cook"]
+    $ firstname_list_male = ["Глеб", "Дональд" , "Севастьян", "Ярослав", "Николай", "Тимур", "Захар", "Клемент", "Виталий", "Адриан"]
+    $ lastname_list_male = ["Дроздов", "Носков", "Крылов", "Лихачёв", "Белов", "Овчинников", "Якушев", "Морозов", "Лаврентьев", "Кондратьев"]
+    $ firstname_list_female = ["Сара", "Кира" , "Владислава", "Ванесса", "Леся", "Инесса", "Мелитта", "Эвелина", "Полина", "Милена"]
+    $ lastname_list_female = ["Александрова", "Петрова" , "Мухина", "Беляева", "Нестерова", "Орехова", "Кулакова", "Мышкина", "Блохина", "Миронова"]
 
 init:   #Предварительные моменты игры
     # Фоновые изображения помещений (bgs = backgrounds).
@@ -37,6 +40,15 @@ label start:    # Тут начинается движение игры.
     "Для начала, пожалуйста, выберите стиль игры."
     "На выбор представлены три режима: свободный , сюжетный и режим ознакомительноно тура по университету."
 
+label pol_choice:
+    "Сейчас вам будет предложено выбрать пол"
+    menu pol_choice_menu:
+        "Выберите пол:"
+        
+        "Женский":
+            $ gender_male = False
+        "Мужской":
+            pass
 
 label gamestyle_choice: # Выбор стиля игры
     menu gamestyle_choice_menu:
@@ -87,7 +99,15 @@ label players_count:  # Меню выбора количества игроко�
             jump two_players
 
 
-"Осталь совсем чуть-чуть. Как к вам можно обращаться ?"
+"Отлично. Осталось только выбрать ваш пол и ввести желаемое имя. С чего начнем?"
+label name_or_gender:
+    menu name_or_gender_menu:
+        "Выберите дальнейшее действие:"
+        
+        "Имя":
+            pass
+        "Пол":
+            pass
 "Вы можете ввести любое имя, или, если желаете, воспользоваться генератором имен."
 
 
@@ -113,6 +133,16 @@ label username_choice_first_player: # Функция input'а имени пол�
 
 label greetings:    # Функция приветствия. 
     first_player "Меня зовут [first_player]!"
+    "Вы уверены в своем выборе? Изменить имя можно будет только после обучения."
+    menu username_choice_menu_confirm:
+        "Подтвердите выбор"
+
+        "Да, мне нравится созданное имя.":
+            pass
+
+        "Нет, я передумал.":
+            jump name_choice
+    
     "Приятно познакомиться, [first_player], меня зовут **, я являюсь деканом факультета информационных технологий."
     show decan at left with dissolve 
     decan "Теперь выберите дисциплину для изучения и практики."
@@ -122,19 +152,33 @@ label greetings:    # Функция приветствия.
 
 label username_generator: #Генератор имен пользователя
 init python:
-        class username_generator_class:
-            def username_generator_func(self):
-                generatedfirstname = renpy.random.choice(firstname_list) 
-                generatedlastname = renpy.random.choice(lastname_list) 
-                store.first_player = generatedfirstname + " " + generatedlastname 
+        class username_generator_class_male:
+
+            def username_male_generator_func(self):
+                generatedfirstnamemale = renpy.random.choice(firstname_list_male) 
+                generatedlastnamemale = renpy.random.choice(lastname_list_male) 
+                store.first_player = generatedfirstnamemale + " " + generatedlastnamemale 
+
+        class username_generator_class_female:
+             def username_female_generator_func(self):
+                generatedfirstnamefemale = renpy.random.choice(firstname_list_female) 
+                generatedlastnamefemale = renpy.random.choice(lastname_list_female) 
+                store.first_player = generatedfirstnamefemale + " " + generatedlastnamefemale 
+
+ 
 
 
 label use_generator:    # Генерируем рандомное имя пользователя
-    python:
-        gen = username_generator_class()
-    $ gen.username_generator_func() 
+init python:
+    if gender_male == True:
+        gen = username_generator_class_male()
+        gen.username_male_generator_func() 
+    else:
+        gen = username_generator_class_female()
+        gen.username_female_generator_func() 
+
     "Сгенерированное имя [first_player]."
-    jump greetings
+jump greetings
 
 "Теперь пора выбрать дисциплину."
 label choice_direction: # Меню выбора дисциплины для одиночной игры
