@@ -5,6 +5,7 @@ define decan = Character ('Декан', color= "#FFA500")
 define prepod_2 = Character ('Преподаватель Python', color= "#00FF00")
 define prepod_3 = Character ('Преподаватель 1С', color= "#00008B")
 define prepod_4 = Character ('Преподаватель SQL', color= "#00008B")
+define prepod_5 = Character ('Преподаватель HTML', color= "#FF00BB")
 define unknown = Character ('', color="#FF0000" )   #Используется в сценах,где не ясно, кто находится перед нами (Проще говоря, рассказчик).
 
 init -1: # Объявляем переменные.
@@ -13,8 +14,8 @@ init -1: # Объявляем переменные.
     $ menu_timer_graphical = False   #  графический таймер
 
     # Переменные для генератора имени пользователя.
-    $ gender_male = True
     $ first_player = ""
+    $ gender_male = False
     $ firstname_list_male = ["Глеб", "Дональд" , "Севастьян", "Ярослав", "Николай", "Тимур", "Захар", "Клемент", "Виталий", "Адриан"]
     $ lastname_list_male = ["Дроздов", "Носков", "Крылов", "Лихачёв", "Белов", "Овчинников", "Якушев", "Морозов", "Лаврентьев", "Кондратьев"]
     $ firstname_list_female = ["Сара", "Кира" , "Владислава", "Ванесса", "Леся", "Инесса", "Мелитта", "Эвелина", "Полина", "Милена"]
@@ -31,14 +32,23 @@ init:   #Предварительные моменты игры
 
     # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Объявлять их тут нет никакого смысла.
 
-
 label start:    # Тут начинается движение игры.
     stop music fadeout 5
     scene bgs muiv with dissolve
     "Добро пожаловать в виртуальный университет."
     "В данной игре вы можете обучаться и практиковаться по различным видам дисциплин."
-    "Для начала, пожалуйста, выберите стиль игры."
-    "На выбор представлены три режима: свободный , сюжетный и режим ознакомительноно тура по университету."
+    "Для начала, пожалуйста, выберите количество игроков."
+
+label players_count:  # Меню выбора количества игроков
+    menu players_count_menu:
+        "Выберите количество игроков:"
+
+        "1 игрок":
+            pass
+        "2 игрока":
+            jump two_players
+        "Online(скоро)":
+            pass
 
 label pol_choice:
     "Сейчас вам будет предложено выбрать пол"
@@ -46,10 +56,78 @@ label pol_choice:
         "Выберите пол:"
         
         "Женский":
-            $ gender_male = False
+            pass
         "Мужской":
+            $ gender_male = True
+
+"Отлично. Теперь введите ваше имя."
+label name_choice:  # Вводит ли пользователь имя сам, или использует генератор.
+    menu username_choice_menu:
+        "Выберите действие"
+
+        "Я введу имя сам.":
+            jump username_choice_first_player
+
+        "Я воспользуюсь генератором имен.":
             pass
 
+        "Вернуться назад":
+            jump players_count
+
+label username_generator: #Генератор имен пользователя
+init python:
+        class username_generator_class_male:
+
+            def username_male_generator_func(self):
+                generatedfirstnamemale = renpy.random.choice(firstname_list_male) 
+                generatedlastnamemale = renpy.random.choice(lastname_list_male) 
+                store.first_player = generatedfirstnamemale + " " + generatedlastnamemale 
+
+        class username_generator_class_female:
+             def username_female_generator_func(self):
+                generatedfirstnamefemale = renpy.random.choice(firstname_list_female) 
+                generatedlastnamefemale = renpy.random.choice(lastname_list_female) 
+                store.first_player = generatedfirstnamefemale + " " + generatedlastnamefemale 
+
+label use_generator:    # Генерируем рандомное имя пользователя
+init python:
+    if gender_male == True:
+        gen = username_generator_class_male()
+        gen.username_male_generator_func() 
+    else:
+        gen = username_generator_class_female()
+        gen.username_female_generator_func() 
+
+    "Сгенерированное имя [first_player]."
+jump greetings
+
+label username_choice_first_player: # Функция input'а имени пользователя (для одичной игры).
+    python:
+        first_player = renpy.input("Меня зовут...\n", length=32)
+        first_player = first_player.strip() # Обрезаем имя, чтобы в поле ввода не попадали пробелы и лишние знаки.
+        if not first_player:
+            first_player = "Студент"
+
+label greetings:    # Функция приветствия. 
+    first_player "Меня зовут [first_player]!"
+    "Вы уверены в своем выборе? Изменить имя можно будет только после обучения."
+    menu username_choice_menu_confirm:
+        "Подтвердите выбор"
+
+        "Да, мне нравится созданное имя.":
+            pass
+
+        "Нет, я передумал.":
+            $ first_player = ""
+            jump name_choice
+    
+    "Приятно познакомиться, [first_player], меня зовут **, я являюсь деканом факультета информационных технологий."
+    show decan at left with dissolve 
+    decan "Теперь выберите дисциплину для изучения и практики."
+    hide decan
+    jump choice_direction
+
+"На выбор представлены три режима: свободный , сюжетный и режим ознакомительноно тура по университету."
 label gamestyle_choice: # Выбор стиля игры
     menu gamestyle_choice_menu:
         "Выберите стиль игры:"
@@ -83,103 +161,8 @@ label choice_confirmation: # Подтверждение выбора польз�
         "Да, я уверен":
             pass
         "Нет, я передумал":
-            jump gamestyle_choice 
-
-
-"Отлично. Теперь выберем количество игроков."
-
-
-label players_count:  # Меню выбора количества игроков
-    menu players_count_menu:
-        "Выберите количество игроков:"
-
-        "1 игрок":
-            pass
-        "2 игрока":
-            jump two_players
-
-
-"Отлично. Осталось только выбрать ваш пол и ввести желаемое имя. С чего начнем?"
-label name_or_gender:
-    menu name_or_gender_menu:
-        "Выберите дальнейшее действие:"
-        
-        "Имя":
-            pass
-        "Пол":
-            pass
-"Вы можете ввести любое имя, или, если желаете, воспользоваться генератором имен."
-
-
-label name_choice:  # Вводит ли пользователь имя сам, или использует генератор.
-    menu username_choice_menu:
-        "Выберите действие"
-
-        "Я введу имя сам.":
-            pass
-
-        "Я воспользуюсь генератором имен.":
-            jump use_generator
-
-        "Вернуться назад":
-            jump players_count
-
-label username_choice_first_player: # Функция input'а имени пользователя (для одичной игры).
-    python:
-        first_player = renpy.input("Меня зовут...\n", length=32)
-        first_player = first_player.strip() # Обрезаем имя, чтобы в поле ввода не попадали пробелы и лишние знаки.
-        if not first_player:
-            first_player = "Студент"
-
-label greetings:    # Функция приветствия. 
-    first_player "Меня зовут [first_player]!"
-    "Вы уверены в своем выборе? Изменить имя можно будет только после обучения."
-    menu username_choice_menu_confirm:
-        "Подтвердите выбор"
-
-        "Да, мне нравится созданное имя.":
-            pass
-
-        "Нет, я передумал.":
-            jump name_choice
-    
-    "Приятно познакомиться, [first_player], меня зовут **, я являюсь деканом факультета информационных технологий."
-    show decan at left with dissolve 
-    decan "Теперь выберите дисциплину для изучения и практики."
-    hide decan
-    jump choice_direction
-
-
-label username_generator: #Генератор имен пользователя
-init python:
-        class username_generator_class_male:
-
-            def username_male_generator_func(self):
-                generatedfirstnamemale = renpy.random.choice(firstname_list_male) 
-                generatedlastnamemale = renpy.random.choice(lastname_list_male) 
-                store.first_player = generatedfirstnamemale + " " + generatedlastnamemale 
-
-        class username_generator_class_female:
-             def username_female_generator_func(self):
-                generatedfirstnamefemale = renpy.random.choice(firstname_list_female) 
-                generatedlastnamefemale = renpy.random.choice(lastname_list_female) 
-                store.first_player = generatedfirstnamefemale + " " + generatedlastnamefemale 
-
- 
-
-
-label use_generator:    # Генерируем рандомное имя пользователя
-init python:
-    if gender_male == True:
-        gen = username_generator_class_male()
-        gen.username_male_generator_func() 
-    else:
-        gen = username_generator_class_female()
-        gen.username_female_generator_func() 
-
-    "Сгенерированное имя [first_player]."
-jump greetings
-
+            jump gamestyle_choice
+     
 "Теперь пора выбрать дисциплину."
 label choice_direction: # Меню выбора дисциплины для одиночной игры
     menu choice_direction_menu:
@@ -193,3 +176,6 @@ label choice_direction: # Меню выбора дисциплины для од
 
         "Язык запросов SQL":
             jump sql_training_start
+
+        "Язык разметки HTML":
+            jump html_training_start
