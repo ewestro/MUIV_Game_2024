@@ -206,25 +206,50 @@ style input:
 ## https://www.renpy.org/doc/html/screen_special.html#choice
 
 
-screen timer_numeral: # Экран выбора с числовым таймером
-    timer 1 repeat True action If(time > 0, SetVariable("time", time - 1), [Hide("timer_numeral"), Jump("timeout_marker")])
+screen numeral_timer_func: # Экран выбора с числовым таймером.
+    timer 1 repeat True action If(time > 0, SetVariable("time", time - 1), [Hide("numeral_timer_menu"), Jump("timeout_marker")])
     text str(time) xalign 0.5 yalign 0.9
-screen timer_graphical: # Экран выбора с графическим таймером
-    timer 1 repeat True action If(time > 0, SetVariable("time", time - 1), [Hide("timer_graphical"), Jump("timeout_marker")])
+
+screen graphical_timer_func: # Экран выбора с графическим таймером.
+    timer 1 repeat True action If(time > 0, SetVariable("time", time - 1), [Hide("graphical_timer_menu"), Jump("timeout_marker")])
     bar value AnimatedValue(0, time, time, time) xalign.5 ypos 30 xmaximum 1500
 
-
-screen choice(items):
-    style_prefix "choice"
-    if menu_timer_numeral == True:
-        use timer_numeral
-    elif menu_timer_graphical == True:
-        use timer_graphical
-
-
-    vbox:
+screen horizontal_menu_func: # Экран выбора с горизонтальным расположением элементов.
+     hbox:
+        align .5 ,.5
         for i in items:
             textbutton i.caption action i.action
+
+screen vertical_menu_func:  # Экран выбора с вертикальным расположением элементов.
+    vbox:
+        for i in items:
+            textbutton i.caption action i.action   
+
+screen choice(items):       # Условия с переключателями.
+    style_prefix "choice"
+    if numeral_timer_menu == True:
+        use numeral_timer_func
+    elif graphical_timer_menu == True:
+        use graphical_timer_func
+    elif horizontal_menu == True:
+        use horizontal_menu_func
+
+    if len (items) > 7: # Условие для прокручиваемого списка элементов (scroll).
+        hbox:
+            align .5 ,.5
+            viewport id 'multichoice':
+                xfill False
+                yfill False
+                mousewheel True
+                maximum 1200, 350
+                xalign 0.5
+                vbox:
+                    for i in items:
+                        textbutton i.caption action i.action
+            vbar value YScrollValue ('multichoice') xmaximum 10 ymaximum 350
+    else:
+        use vertical_menu_func
+
 
 
 style choice_vbox is vbox
