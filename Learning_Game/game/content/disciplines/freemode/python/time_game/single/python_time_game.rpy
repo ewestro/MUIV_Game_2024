@@ -3,7 +3,7 @@ label python_time_game_start:
 
     label QTE_test_1:   #Задание 1
     $ time = 10
-    $ menu_timer_graphical = True
+    $ graphical_timer_menu = True
     scene bgs blackboard
     menu QTE_test_1_1:
         "Это тест QTE c графическим таймером."
@@ -14,7 +14,7 @@ label python_time_game_start:
            
 label QTE_test_2:
     $ time = 10
-    $ menu_timer_numeral = True
+    $ numeral_timer_menu= True
     scene bgs blackboard
     menu QTE_test_2_1:
         "А это тест с текстовым таймером."
