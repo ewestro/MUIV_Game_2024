@@ -89,7 +89,7 @@ init python:
                 store.first_player = generatedfirstnamemale + " " + generatedlastnamemale 
 
         class username_generator_class_female:
-             def username_female_generator_func(self):
+            def username_female_generator_func(self):
                 generatedfirstnamefemale = renpy.random.choice(firstname_list_female) 
                 generatedlastnamefemale = renpy.random.choice(lastname_list_female) 
                 store.first_player = generatedfirstnamefemale + " " + generatedlastnamefemale 
