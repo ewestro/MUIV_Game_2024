@@ -185,6 +185,8 @@ init python:
     build.classify('**/.**', None)
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
+    build.classify('**/.rpyc', None)
+
 
     ## Чтобы архивировать файлы, классифицируйте их, например, как 'archive'.
 

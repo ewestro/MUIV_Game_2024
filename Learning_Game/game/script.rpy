@@ -58,7 +58,7 @@ label players_count:  # Меню выбора количества игроко�
             jump debug_start
 
 label pol_choice:
-    $ horizontal_menu = True
+
     "Сейчас вам будет предложено выбрать пол"
     menu pol_choice_menu:
         "Выберите пол:"
@@ -167,7 +167,7 @@ label gamestyle_choice: # Выбор стиля игры
             jump freedom_mode
 
         "Ознакомительный тур":
-            jump university_tour_mode
+            jump university_tour_start
 
 
 label story_mode: # Если выбраен сюжетный режим.
