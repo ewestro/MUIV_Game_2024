@@ -23,23 +23,27 @@ init -1: # Переключатели и Переменные.
     $ lastname_list_female = ["Александрова", "Петрова" , "Мухина", "Беляева", "Нестерова", "Орехова", "Кулакова", "Мышкина", "Блохина", "Миронова"]
 
 init:   #Предварительные моменты игры
-    # Фоновые изображения помещений (bgs = backgrounds).
-    image bgs muiv = "content/images/backgrounds/others/muiv.jpeg"
-    image bgs blackboard = "content/images/backgrounds/boards/blackboard.jpg"
-    image bgs fail = "content/images/backgrounds/others/fail.jpg"
-
+    # Фоновые изображения помещений (bg_ = backgrounds).
+    image bg_muiv = "content/images/backgrounds/others/muiv.jpeg"
+    image bg_vhod = "content/images/backgrounds/others/vhod.jpg"
+    image bg_koridor = "content/images/backgrounds/others/koridor.jpg"
+    image bg_koridor2 = "content/images/backgrounds/others/koridor2.jpg"
+    image bg_blackboard = "content/images/backgrounds/boards/blackboard.jpg"
+    image bg_fail = "content/images/backgrounds/others/fail.jpg"
+    image bg_kabinet = "content/images/backgrounds/others/kabinet.jpg"
+    image bg_viborka = "content/images/backgrounds/others/viborka.jpg"
     # Изображения вышеобъявленных персонажей.
     image decan = "content/images/characters/decan.png"
-
+    image secretar = "content/images/characters/secretar.png"
     # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Объявлять их тут нет никакого смысла.
 
 label start:    # Тут начинается движение игры.
     stop music fadeout 5
-    scene bgs muiv with dissolve
+    scene bg_muiv with dissolve
     "Добро пожаловать в виртуальный университет."
     "В данной игре вы можете обучаться и практиковаться по различным видам дисциплин."
     "Для начала, пожалуйста, выберите количество игроков."
-
+scene bg_vhod with dissolve
 label players_count:  # Меню выбора количества игроков
     menu players_count_menu:
         "Выберите количество игроков:"
@@ -65,7 +69,7 @@ label pol_choice:
             $ gender_male = True
 
 "Отлично. Теперь введите ваше имя."
-$ horizontal_menu = False
+
 label name_choice:  # Вводит ли пользователь имя сам, или использует генератор.
     menu username_choice_menu:
         "Выберите действие"
@@ -125,13 +129,32 @@ label greetings:    # Функция приветствия.
         "Нет, я передумал.":
             $ first_player = ""
             jump name_choice
-    
-    decan "Приятно познакомиться, [first_player], меня зовут **, я являюсь деканом факультета информационных технологий."
-    show decan at left with dissolve 
-  
+
+scene bg_koridor with dissolve
+show decan at left with dissolve  
+decan "Приятно познакомиться, [first_player], меня зовут Зайцев Сергей Александрович, я являюсь деканом факультета информационных технологий."
+show secretar at right with dissolve 
+"А это мой секретарь Елизавета Олеговна. Она будет вас сопровождать во время игры, и если возникнут вопросы, обращайтесь к ней."
+hide decan
+hide secretar
+
+scene bg_koridor2 with dissolve
+show secretar at right with dissolve 
+"Привет. Ну что, начнем обучение?"
+
+label players_vibor:  # Меню выбора количества игроков
+    menu players_vibor_menu:
+
+        "ДА!":
+            pass
+        "НЕТ!!":
+            "Подумай ещё."
+            jump players_vibor
+            
+scene bg_kabinet with dissolve
 "Пора выбрать режим игры."
 "На выбор представлены три режима: свободный , сюжетный и режим ознакомительноно тура по университету."
-hide decan
+hide secretar
 
 label gamestyle_choice: # Выбор стиля игры
     menu gamestyle_choice_menu:
@@ -164,7 +187,8 @@ label choice_confirmation: # Подтверждение выбора польз�
             pass
         "Нет, я передумал":
             jump gamestyle_choice
-     
+
+scene bg_viborka with dissolve    
 "Теперь пора выбрать дисциплину."
 label choice_direction: # Меню выбора дисциплины для одиночной игры
     menu choice_direction_menu:
