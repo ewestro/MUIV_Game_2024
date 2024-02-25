@@ -1,13 +1,21 @@
 init:  
+    $ pop = 2
     $ task_1 = 0
 
 label html_exam_start:
-    show prepod_5 at right with dissolve 
-    prepod_5 "Сейчас будем проходить тестирование по HTML. Надеюсь ты хорошо подготовился."
-    hide prepod_5
-label mobilka_task_one:
+    
+    if pop == 0:
+        prepod_5 "Попытки кончились. Ваш последний результат: [task_1] баллов из 10."
+        jump choice_direction
+    else:
+        show prepod_5 at right with dissolve 
+        prepod_5 "Сейчас будем проходить тестирование по HTML. Надеюсь ты хорошо подготовился."
+        hide prepod_5
 
-         menu w1:
+        $ time = 600       
+        $ numeral_timer_menu = True
+
+        menu w1:
                 "Что такое HTML?"
 
                 "Язык разметки":
@@ -20,7 +28,7 @@ label mobilka_task_one:
                 "Библиотека гипертекста":
                     pass
 
-         menu w2:
+        menu w2:
                 "HTML-документ может иметь расширения:"
 
                 ".html или .htm":
@@ -33,7 +41,7 @@ label mobilka_task_one:
                 ".html":
                     pass 
 
-         menu w3:
+        menu w3:
                 "В HTML не существует … тэгов."
 
                 "Парных":
@@ -46,7 +54,7 @@ label mobilka_task_one:
                     $ task_1 += 1
                     pass 
 
-         menu w4:
+        menu w4:
                 "Какие тэги делают шрифт текста жирным?"
                 "Пиксели и миллиметры":
                     pass
@@ -56,7 +64,7 @@ label mobilka_task_one:
                     pass
                     $ task_1 += 1
 
-         menu w5:
+        menu w5:
                 "Выберите код HTML, который бы создавал кнопку отправки заполненной формы. Имя кнопки – ОК."
 
                 "<input type='OK' value='Submit'/>":
@@ -69,7 +77,7 @@ label mobilka_task_one:
                 "<p> input type='Submit' value='OK'< /p>":
                     pass
 
-         menu w6:
+        menu w6:
                 "Какой тэг при создании страницы добавляет имя страницы, которое будет отображаться в строке заголовка в браузере пользователя?"
 
                 "<title> … </title>":
@@ -82,7 +90,7 @@ label mobilka_task_one:
                 "<body> … </body>":
                     pass
 
-         menu w7:
+        menu w7:
                 "Что содержит в себе атрибут href?"
 
                 "URL страницы, на которую произойдет перенаправление":
@@ -95,7 +103,7 @@ label mobilka_task_one:
                 "Указание на то, где будет открываться новая страница: в том же или новом окне":
                     pass 
 
-         menu w8:
+        menu w8:
                 "Какие из перечисленных тэгов относятся к созданию таблицы?"
 
                 "<header> <body> <footer>":
@@ -108,7 +116,7 @@ label mobilka_task_one:
                 "<ul> <li> <tr> <td>":
                     pass 
 
-         menu w9:
+        menu w9:
                 "Укажите тэг, который соответствует элементу списка:"
 
                 "<li>":
@@ -121,7 +129,7 @@ label mobilka_task_one:
                 "<ol>":
                     pass 
 
-         menu w10:
+        menu w10:
                 "Какие тэги делают шрифт текста жирным?"
                 "<ins> и <del>":
                     pass
@@ -130,12 +138,18 @@ label mobilka_task_one:
                 "<b> и <strong>":
                     pass
                     $ task_1 += 1
-
+$ pop -= 1
+$ numeral_timer_menu = False
 show prepod_5 at right with dissolve 
-prepod_5 "Отлично! Первый тест пройден на [task_1] баллов из 10. Теперь можно идти дальше."
+
+if task_1 >= 6:
+    prepod_5 "Отлично! Первый тест пройден на [task_1] баллов из 10. Теперь можно идти дальше."
+else:
+    prepod_5 "К сожалению первый тест пройден на [task_1] баллов из 10. Нужно подготовиться получше."
+
 hide prepod_5
 
 label ends_tasks_html:
     menu end_task_1:     
-        "Выйти в меню":
-            jump choice_direction # Меню выбора дисциплины для одиночной игры
+        "Вернуться":
+            jump html_game_mode_choice # Меню выбора дисциплины для одиночной игры

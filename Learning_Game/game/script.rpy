@@ -1,13 +1,13 @@
 ﻿# Объявляем персонажей (легче обращаться к сущностям, чем каждый раз прописывать их заново).
 define first_player = Character ("[first_player]", color= "#00FFFF" )   #Игрок №1. Для пояснений, см. label name_choice.
 define second_player = Character ("[second_player]", color= "#00FFFF" ) #Игрок №2. Для пояснений, см. label name_choice_coop.
-define decan = Character ('Декан Зайцев Сергей Александрович', color= "#FFA500")  
-define secretar = Character ('Секретарь Елизавета Олеговна', color= "#FFA5FF") 
-define prepod_2 = Character ('Преподаватель Преображенский Максим Владимирович', color= "#00FF00")
-define prepod_3 = Character ('Преподаватель Стряпунина Нэля Ильинична', color= "#00008B")
-define prepod_4 = Character ('Преподаватель SQL', color= "#00008B")
-define prepod_5 = Character ('Преподаватель Киселёв Федор Владимирович', color= "#FF00BB")
-define prepod_6 = Character ('Преподаватель Коротков Дмитрий Павлович', color= "#FF550B")
+define decan = Character ('Зайцев Сергей Александрович', color= "#FFA500")  
+define secretar = Character ('Елизавета Олеговна', color= "#FFA5FF") 
+define prepod_2 = Character ('Преображенский Максим Владимирович', color= "#00FF00")
+define prepod_3 = Character ('Стряпунина Нэля Ильинична', color= "#00008B")
+define prepod_4 = Character ('SQL', color= "#00008B")
+define prepod_5 = Character ('Киселёв Федор Владимирович', color= "#FF00BB")
+define prepod_6 = Character ('Коротков Дмитрий Павлович', color= "#FF550B")
 define unknown = Character ('', color="#FF0000" )   #Используется в сценах,где не ясно, кто находится перед нами (Проще говоря, рассказчик).
 
 init -1: # Переключатели и Переменные.
