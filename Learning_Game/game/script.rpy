@@ -1,11 +1,13 @@
 ﻿# Объявляем персонажей (легче обращаться к сущностям, чем каждый раз прописывать их заново).
 define first_player = Character ("[first_player]", color= "#00FFFF" )   #Игрок №1. Для пояснений, см. label name_choice.
 define second_player = Character ("[second_player]", color= "#00FFFF" ) #Игрок №2. Для пояснений, см. label name_choice_coop.
-define decan = Character ('Декан', color= "#FFA500")  
-define prepod_2 = Character ('Преподаватель Python', color= "#00FF00")
-define prepod_3 = Character ('Преподаватель 1С', color= "#00008B")
+define decan = Character ('Декан Зайцев Сергей Александрович', color= "#FFA500")  
+define secretar = Character ('Секретарь Елизавета Олеговна', color= "#FFA5FF") 
+define prepod_2 = Character ('Преподаватель Преображенский Максим Владимирович', color= "#00FF00")
+define prepod_3 = Character ('Преподаватель Стряпунина Нэля Ильинична', color= "#00008B")
 define prepod_4 = Character ('Преподаватель SQL', color= "#00008B")
-define prepod_5 = Character ('Преподаватель HTML', color= "#FF00BB")
+define prepod_5 = Character ('Преподаватель Киселёв Федор Владимирович', color= "#FF00BB")
+define prepod_6 = Character ('Преподаватель Коротков Дмитрий Павлович', color= "#FF550B")
 define unknown = Character ('', color="#FF0000" )   #Используется в сценах,где не ясно, кто находится перед нами (Проще говоря, рассказчик).
 
 init -1: # Переключатели и Переменные.
@@ -35,6 +37,10 @@ init:   #Предварительные моменты игры
     # Изображения вышеобъявленных персонажей.
     image decan = "content/images/characters/decan.png"
     image secretar = "content/images/characters/secretar.png"
+    image prepod_5 = "content/images/characters/prepod_5.png"
+    # Изображения меню
+    image menu_1 = "content/images/menu/menu_1.jpg"
+    image menu_2 = "content/images/menu/menu_2.jpg"
     # Изображения , которые будут использоваться в целях обучения и тестирования (т.е, единоразовые), хранить и объявлять в соответствующих им папкам и файлам. Объявлять их тут нет никакого смысла.
 
 label start:    # Тут начинается движение игры.
@@ -134,21 +140,21 @@ scene bg_koridor with dissolve
 show decan at left with dissolve  
 decan "Приятно познакомиться, [first_player], меня зовут Зайцев Сергей Александрович, я являюсь деканом факультета информационных технологий."
 show secretar at right with dissolve 
-"А это мой секретарь Елизавета Олеговна. Она будет вас сопровождать во время игры, и если возникнут вопросы, обращайтесь к ней."
+decan "А это мой секретарь Елизавета Олеговна. Она будет вас сопровождать во время игры, и если возникнут вопросы, обращайтесь к ней."
 hide decan
 hide secretar
 
 scene bg_koridor2 with dissolve
 show secretar at right with dissolve 
-"Привет. Ну что, начнем обучение?"
+secretar "Привет. Ну что, начнем обучение?"
 
 label players_vibor:  # Меню выбора количества игроков
     menu players_vibor_menu:
 
-        "ДА!":
+        "Да":
             pass
-        "НЕТ!!":
-            "Подумай ещё."
+        "Нет":
+            secretar "Подумай ещё."
             jump players_vibor
             
 scene bg_kabinet with dissolve
@@ -205,3 +211,6 @@ label choice_direction: # Меню выбора дисциплины для од
 
         "Язык разметки HTML":
             jump html_training_start
+
+        "Разработка ПО для мобильных устройств":
+            jump mobilka_training_start
