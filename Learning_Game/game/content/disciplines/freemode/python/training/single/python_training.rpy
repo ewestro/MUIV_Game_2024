@@ -1,24 +1,30 @@
 label python_training_start:
-    prepod_2 "[first_player],добро пожаловать на курс изучения python"
-    prepod_2 "Пожалуйста, выберите режим игры"
-    jump game_mode_choice
+    scene bg_kabinet with dissolve
+    show prepod_2 at left
+    prepod_2 " Добро пожаловать на курс изучения Python!"
+    prepod_2 "Пожалуйста, выберите режим игры."
+    jump python_gamemode_choice
+    hide prepod_2
 
 
-label game_mode_choice:
-    menu choice_gamemode:
-        "Режим игры"
+label python_gamemode_choice:
+    menu python_gamemode_choice_menu:
+        "Режим игры:"
 
         "Блиц-игра":
-            jump python_time_game_start
+            jump python_attempts_checkout
 
-        "Сборка полноценного кода по кусочкам":
-            jump bulding_code_mode
-             
         "Экзамен":
             jump python_exam_start
 
+        "Сборка полноценного кода по кусочкам":
+            jump building_code_mode
+             
 
+label building_code_mode:
+    "Этот режим пока недоступен."
+    jump python_gamemode_choice
 
-
-label bulding_code_mode:
-    #pass
+label building_code_mode2:
+    "Этот режим пока недоступен."
+    jump players_count

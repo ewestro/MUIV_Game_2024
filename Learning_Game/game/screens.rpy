@@ -217,6 +217,7 @@ screen graphical_timer_func: # Экран выбора с графическим
 screen horizontal_menu_func: # Экран выбора с горизонтальным расположением элементов.
      hbox:
         align .5 ,.5
+
         for i in items:
             textbutton i.caption action i.action
 
@@ -225,30 +226,38 @@ screen vertical_menu_func:  # Экран выбора с вертикальны�
         for i in items:
             textbutton i.caption action i.action   
 
-screen choice(items):       # Условия с переключателями.
+screen vertical_menu_with_scroll: # Экран выбора с прокручиваемым списком.
+    hbox:
+        align .5 ,.5
+        viewport id 'multichoice':
+            xfill False
+            yfill False
+            mousewheel True
+            maximum 1200, 350
+            xalign 0.5
+            vbox:
+                for i in items:
+                    textbutton i.caption action i.action
+            vbar value YScrollValue ('multichoice') xmaximum 10 ymaximum 350
+
+screen choice(items):       # Условия для меню
     style_prefix "choice"
+    if len (items) > 7:
+        use vertical_menu_with_scroll
+
     if numeral_timer_menu == True:
         use numeral_timer_func
-    elif graphical_timer_menu == True:
-        use graphical_timer_func
-    elif horizontal_menu == True:
-        use horizontal_menu_func
 
-    if len (items) > 7: # Условие для прокручиваемого списка элементов (scroll).
-        hbox:
-            align .5 ,.5
-            viewport id 'multichoice':
-                xfill False
-                yfill False
-                mousewheel True
-                maximum 1200, 350
-                xalign 0.5
-                vbox:
-                    for i in items:
-                        textbutton i.caption action i.action
-            vbar value YScrollValue ('multichoice') xmaximum 10 ymaximum 350
-    else:
+    if graphical_timer_menu == True:
+        use graphical_timer_func
+
+    if horizontal_menu == True:
+        use horizontal_menu_func
+        
+    if vertical_menu == True:
         use vertical_menu_func
+        
+
 
 
 
