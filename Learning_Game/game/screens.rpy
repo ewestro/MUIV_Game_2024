@@ -518,7 +518,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     use navigation
 
-    textbutton _("Вернуться"):
+    textbutton _("Назад"):
         style "return_button"
 
         action Return()

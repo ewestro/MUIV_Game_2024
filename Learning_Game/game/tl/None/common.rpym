@@ -123,7 +123,7 @@ translate None strings:
 
     # renpy/common/00accessibility.rpy:239
     old "Return"
-    new "Вернуться"
+    new "Назад"
 
     # renpy/common/00action_file.rpy:26
     old "{#weekday}Monday"
