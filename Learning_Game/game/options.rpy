@@ -23,15 +23,19 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "V 0.5 Alpha"
+define config.version = "V 0.6 Alpha"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
 ## Для отделения абзацев оставляйте между ними пустую строку.
 
-define gui.about = _p(""" Багрепорты направлять сюда: "{a=jump}vk.com/Tim1894{/a}"
+define gui.about = _p(
+"""       """
+"""     Специально для {a=https://www.muiv.ru/} Московского университета имени С.Ю.Витте. {/a} """
+"""        """
+""" Багрепорты направлять сюда :{a=https://vk.com/Tim1894} VK {/a} или сюда: {a=https://vk.com/ewestro} VK {/a}
 """)
-
+ 
 
 ## Короткое название игры, используемое для исполняемых файлов и директорий при
 ## постройке дистрибутивов. Оно должно содержать текст формата ASCII и не должно
@@ -48,7 +52,7 @@ define build.name = "MUIV_Learning_Game"
 
 define config.has_sound = True
 define config.has_music = True
-define config.has_voice = True
+define config.has_voice = False
 
 
 ## Чтобы разрешить игроку тестировать громкость на звуковом или голосовом
